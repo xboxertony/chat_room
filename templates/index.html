@@ -1,0 +1,43 @@
+<script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+<body>
+    <div>{{room}}</div>
+    <textarea name="" id="textbox" cols="30" rows="10"></textarea>
+    <input type="text" id="msg">
+    <a href="#" onclick="broadcaset();">廣播</a>
+    <a href="#" onclick="leave_room();">登出聊天室</a>
+</body>
+<script>
+    let input = document.getElementById("msg");
+    let textbox = document.getElementById("textbox");
+    let socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+    socket.on("connect",function(){
+        socket.emit("my event",{data:"I am Connect /n"})
+    })
+    socket.on("status",function(data){
+        // console.log(data["data"]);
+        let msg = document.createTextNode(data)
+        textbox.appendChild(msg)
+    })
+    socket.on("message",function(data){
+        // console.log(data["data"]);
+        let msg = document.createTextNode(data)
+        textbox.appendChild(msg)
+    })
+    input.addEventListener("keydown",function(e){
+        console.log(e.key)
+        if(e.key==="Enter"){
+            let msg = input.value+"\n"
+            input.value = ""
+            socket.emit("text",msg)
+        }
+    })
+    function leave_room(){
+        socket.emit("left",{},function(){
+            socket.disconnect()
+            window.location.href = "{{url_for('home')}}"
+        })
+    }
+    function broadcaset(){
+        socket.emit("broadcast","I am here")
+    }
+</script>
