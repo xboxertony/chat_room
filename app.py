@@ -34,6 +34,15 @@ def ggg():
     socketio.emit("message1",{"data":"Are you ok?"},namespace='/chat',to=session['room'])
     return "ok"
 
+@app.route("/jjjj")
+def kjkjk():
+    socketio.emit("message",{"data":"Are you ok?"},namespace='/jjjj')
+    return "ok"
+
+@app.route("/testtest")
+def gggg():
+    return render_template("test.html")
+
 @app.route("/",methods=["GET","POST"])
 def home():
     if request.method=="POST" and request.form["user"] and request.form["room"]:
