@@ -23,6 +23,12 @@
         let msg = document.createTextNode(data)
         textbox.appendChild(msg)
     })
+    socket.on("message1",function(data){
+        // console.log(data["data"]);
+        console.log(data)
+        let msg = document.createTextNode(data['data'])
+        textbox.appendChild(msg)
+    })
     input.addEventListener("keydown",function(e){
         console.log(e.key)
         if(e.key==="Enter"){
