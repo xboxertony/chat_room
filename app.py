@@ -39,6 +39,11 @@ def kjkjk():
     socketio.emit("message",{"data":"Are you ok?"},namespace='/jjjj')
     return "ok"
 
+@app.route("/gggg")
+def just_for_test():
+    socketio.emit("message",{"data":"Are you ggggg?"},namespace='/jjjj')
+    return "ok"
+
 @app.route("/testtest")
 def gggg():
     return render_template("test.html")
